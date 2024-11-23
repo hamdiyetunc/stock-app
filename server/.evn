@@ -1,0 +1,5 @@
+JWT_SECRET=secret_key
+MONGODB_URI=mongodb://localhost:27017/mydatabase
+PORT=5174
+API_KEY=api_key
+DATABASE_PASSWORD=database_password

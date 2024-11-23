@@ -1,0 +1,421 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Weave Words API
+  description: API documentation for the Weave Words application.
+
+host: weave-words.com
+basePath: /v1/api
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+
+tags:
+  - name: Authentication
+    description: Endpoints for user authentication
+  - name: User Management
+    description: Endpoints for managing user profiles and relationships
+  - name: Conversations
+    description: Endpoints for managing conversations and group chats
+
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Unique user ID.
+      username:
+        type: string
+        minLength: 3
+        maxLength: 50
+        description: User's username.
+      email:
+        type: string
+        format: email
+        description: User's email address.
+      role:
+        type: string
+        enum:
+          - user
+          - admin
+        description: User role (user, admin).
+      avatar:
+        type: string
+        description: URL of the user's avatar.
+      status:
+        type: string
+        enum:
+          - online
+          - offline
+          - away
+        description: User's online status.
+
+  FriendRequest:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Unique friend request ID.
+      sender_username:
+        type: string
+        description: Username of the user sending the friend request.
+      recipient_username:
+        type: string
+        description: Username of the user receiving the friend request.
+      status:
+        type: string
+        enum:
+          - pending
+          - accepted
+          - declined
+        description: Status of the friend request.
+
+  Friendship:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Unique friendship ID.
+      user1:
+        type: string
+        format: uuid
+        description: ID of the first user in the friendship.
+      user2:
+        type: string
+        format: uuid
+        description: ID of the second user in the friendship.
+
+  Message:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Unique message ID.
+      sender:
+        type: string
+        format: uuid
+        description: ID of the message sender.
+      content:
+        type: string
+        description: Message content.
+      timestamp:
+        type: string
+        format: date-time
+        description: Timestamp of the message.
+
+  Conversation:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Unique conversation ID.
+      title:
+        type: string
+        maxLength: 255
+        description: Title of the conversation.
+      members:
+        type: array
+        items:
+          $ref: "#/definitions/User"
+        description: List of members in the conversation.
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User Login
+      description: Authenticates a user and provides an access token.
+      parameters:
+        - name: credentials
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                description: User's username.
+              password:
+                type: string
+                description: User's password.
+      responses:
+        200:
+          description: Successful login
+        401:
+          description: Unauthorized
+
+  /auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: Refresh Access Token
+      description: Refreshes the user's access token.
+      responses:
+        200:
+          description: Access token refreshed successfully
+        401:
+          description: Unauthorized
+
+  /auth/logout:
+    delete:
+      tags:
+        - Authentication
+      summary: User Logout
+      description: Logs the user out.
+      responses:
+        200:
+          description: Logged out
+
+  /user:
+    post:
+      tags:
+        - User Management
+      summary: Create User Account
+      description: Create a new user account with a specified role.
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        201:
+          description: User account created successfully
+        400:
+          description: Bad Request
+
+  /user/{userId}:
+    get:
+      tags:
+        - User Management
+      summary: Get User Information
+      description: Retrieve detailed information about a user.
+      parameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the user.
+      responses:
+        200:
+          description: User information retrieved successfully
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: User not found
+    patch:
+      tags:
+        - User Management
+      summary: Update User Information
+      description: Update a user's information.
+      parameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the user.
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        200:
+          description: User information updated successfully
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: Bad Request
+        404:
+          description: User not found
+
+  /user/{userId}/friend-requests:
+    get:
+      tags:
+        - User Management
+      summary: Get User's Friend Requests
+      description: Retrieve the list of a user's friend requests.
+      parameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the user.
+      responses:
+        200:
+          description: User's friend requests retrieved successfully
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/FriendRequest"
+        401:
+          description: Unauthorized
+    post:
+      tags:
+        - User Management
+      summary: Send Friend Request
+      description: Send a friend request to another user.
+      parameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the recipient user.
+        - name: request
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/FriendRequest"
+      responses:
+        201:
+          description: Friend request sent successfully
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+
+  /user/{userId}/friend-requests/{requestId}:
+    put:
+      tags:
+        - User Management
+      summary: Accept Friend Request
+      description: Accept a friend request from another user.
+      parameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the sender of the friend request.
+        - name: requestId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the friend request.
+      responses:
+        200:
+          description: Friend request accepted successfully
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Friend request not found
+
+    delete:
+      tags:
+        - User Management
+      summary: Decline Friend Request
+      description: Decline a friend request from another user.
+      parameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the sender of the friend request.
+        - name: requestId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the friend request.
+      responses:
+        200:
+          description: Friend request declined successfully
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Friend request not found
+
+  /user/{userId}/friends:
+    get:
+      tags:
+        - User Management
+      summary: Get User's Friends
+      description: Retrieve the list of a user's friends or contacts.
+      parameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the user.
+      responses:
+        200:
+          description: User's friends retrieved successfully
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        401:
+          description: Unauthorized
+
+  /conversation:
+    get:
+      tags:
+        - Conversations
+      summary: List Conversations
+      description: Retrieve a list of the user's active conversations or group chats.
+      responses:
+        200:
+          description: Conversations listed successfully
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Conversation"
+        401:
+          description: Unauthorized
+
+  /conversation/{conversationId}/messages:
+    get:
+      tags:
+        - Conversations
+      summary: Get Message History
+      description: Retrieve the message history for a specific conversation.
+      parameters:
+        - name: conversationId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the conversation.
+      responses:
+        200:
+          description: Message history retrieved successfully
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Message"
+        401:
+          description: Unauthorized
+
+  /conversation/{conversationId}/messages/{messageId}:
+    delete:
+      tags:
+        - Conversations
+      summary: Delete Message
+      description: Delete a message from a conversation.
+      parameters:
+        - name: conversationId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the conversation.
+        - name: messageId
+          in: path
+          type: string
+          required: true
+          description: Unique ID of the message.
+      responses:
+        200:
+          description: Message deleted successfully
+        401:
+          description: Unauthorized

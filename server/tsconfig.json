@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./build",
+    "strict": true,
+    "rootDir": "./src",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es2021"]
+  },
+  "include": [
+    "mongoose.d.ts",
+    "src/**/*.ts", "src/WebSocket.js", "src/routes/messageRoutes.js",
+  ],
+  "exclude": ["node_modules"]
+}
