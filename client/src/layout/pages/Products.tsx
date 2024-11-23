@@ -8,7 +8,7 @@ const Products: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
+    <div className="shadow rounded-lg p-6">
       <h1 className="text-2xl font-bold mb-4 text-[#0077b6]">Products</h1>
       <table className="w-full border-collapse border border-gray-300">
         <thead>

@@ -12,7 +12,7 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <main className="flex-grow mt-[80px] sm:mt-[100px] lg:mt-[120px]">
-        <div className="container mx-auto p-4 lg:p-8">
+        <div className="container mx-auto p-4 mb-4 lg:p-8">
           <Outlet />
         </div>
       </main>

@@ -22,6 +22,7 @@ const Footer: React.FC = () => {
               link="/stocks"
             />
             <FooterItem
+              className="mr-11"
               icon={<FaStore className="h-4 w-4 sm:h-4 sm:w-4 lg:h-6 lg:w-6" />}
               label="Stores"
               link="/stores"
@@ -63,6 +64,7 @@ interface FooterItemProps {
   label: string;
   link?: string;
   onClick?: () => void;
+  className?: string;
 }
 
 const FooterItem: React.FC<FooterItemProps> = ({
@@ -70,6 +72,7 @@ const FooterItem: React.FC<FooterItemProps> = ({
   label,
   link,
   onClick,
+  className,
 }) => {
   const handleClick = (event: React.MouseEvent) => {
     if (onClick) {
@@ -82,7 +85,7 @@ const FooterItem: React.FC<FooterItemProps> = ({
     <a
       href={link || "#"}
       onClick={handleClick}
-      className="flex flex-col items-center gap-2 hover:text-gray-200 transition duration-300 transform hover:-translate-y-1"
+      className={`flex flex-col items-center gap-2 hover:text-gray-200 transition duration-300 transform hover:-translate-y-1 ${className}`}
     >
       {icon}
       <span className="text-sm font-medium">{label}</span>

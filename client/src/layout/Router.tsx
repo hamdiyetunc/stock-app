@@ -5,11 +5,13 @@ import App from "./pages/App";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import ProductList from "./components/ProductList";
+import ProductList from "./pages/Stocks";
 import { NotFound } from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
 import Products from "./pages/Products";
 import Stores from "./pages/Stores";
+import Contact from "./pages/Contact";
+import Map from "./pages/Map";
 
 const router = createBrowserRouter([
   {
@@ -20,8 +22,10 @@ const router = createBrowserRouter([
       { path: "/home", element: <Home /> },
       { path: "/stocks", element: <ProductList /> },
       { path: "/products", element: <Products /> },
-      { path: "/aboutus", element: <AboutUs /> },
       { path: "/stores", element: <Stores /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "/aboutus", element: <AboutUs /> },
+      { path: "/map", element: <Map /> },
     ],
   },
   { path: "/signup", element: <Signup /> },

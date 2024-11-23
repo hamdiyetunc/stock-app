@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProductList: React.FC = () => {
+const Stocks: React.FC = () => {
   const products = [
     { id: 1, name: "Product A", price: 199.99, stock: 34 },
     { id: 2, name: "Product B", price: 99.99, stock: 10 },
@@ -10,7 +10,7 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="p-6">
-      <div className="container mx-auto">
+      <div className="container mx-auto mt-40">
         <h1 className="text-3xl lg:text-4xl font-extrabold text-center bg-gradient-to-r from-[#030303] to-[#181817] text-transparent bg-clip-text mb-10">
           Product Stock Management
         </h1>
@@ -64,4 +64,4 @@ const ProductList: React.FC = () => {
   );
 };
 
-export default ProductList;
+export default Stocks;
