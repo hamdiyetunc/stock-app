@@ -22,15 +22,15 @@ const Footer: React.FC = () => {
               link="/stocks"
             />
             <FooterItem
-              className="mr-11"
+              className="mr-16"
               icon={<FaStore className="h-4 w-4 sm:h-4 sm:w-4 lg:h-6 lg:w-6" />}
               label="Stores"
               link="/stores"
             />
-            <div className="absolute -top-14 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
               <a
                 href="/home"
-                className="flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-[#0077b6] via-[#74dddd] to-[#0077b6] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
+                className="flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-[#74dddd] via-[#0077b6] to-[#0077b6] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
               >
                 <FaHome className="w-8 h-8 sm:w-10 sm:h-10" />
               </a>

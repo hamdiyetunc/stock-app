@@ -5,7 +5,7 @@ const AboutUs: React.FC = () => {
     <div className="p-6">
       <div className="container mx-auto">
         <h1 className="text-4xl lg:text-5xl mb-4 font-extrabold text-center bg-gradient-to-r text-[#0077b6] text-transparent bg-clip-text">
-          About Us:
+          ABOUT US:
         </h1>
         <p className="mb-4 text-gray-700 leading-relaxed">
           Welcome to ST Management! We are dedicated to providing innovative

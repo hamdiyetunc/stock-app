@@ -1,23 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import {
-  FaHome,
-  FaBoxOpen,
-  FaStore,
-  FaMapMarkerAlt,
-  FaInfoCircle,
-} from "react-icons/fa";
+import { RiProductHuntFill } from "react-icons/ri";
+import { IoMdMail } from "react-icons/io";
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
-  };
-
-  const closeMenu = () => {
-    setMenuOpen(false);
   };
 
   return (
@@ -37,63 +28,78 @@ const Header: React.FC = () => {
           </span>
         </div>
 
+        {/* Navigation Links */}
+        <nav className="hidden md:flex space-x-6">
+          <a
+            href="/products"
+            className="font-extrabold bg-gradient-to-r from-[#0077b6] via-[#74dddd] to-[#0077b6] text-transparent bg-clip-text drop-shadow-md hover:text-[#a5e0fd] text-lg sm:text-xl transition duration-300 transform hover:scale-105"
+          >
+            Products
+          </a>
+          <a
+            href="/contact"
+            className="font-extrabold bg-gradient-to-r from-[#0077b6] via-[#74dddd] to-[#0077b6] text-transparent bg-clip-text drop-shadow-md hover:text-[#a5e0fd] text-lg sm:text-xl transition duration-300 transform hover:scale-105"
+          >
+            Contact
+          </a>
+        </nav>
+
         {/* Mobile Menu Button */}
         <button
           onClick={handleMenuToggle}
-          className="md:hidden text-white hover:text-dark-aqua transition-all duration-300 transform hover:scale-125"
+          className="md:hidden text-white transition-all duration-300 transform"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className={`h-8 w-8 transition-all duration-300 ${
-              menuOpen ? "rotate-90" : ""
+          <div
+            className={`relative w-6 h-6 flex justify-center items-center transition-transform duration-500 ${
+              menuOpen ? "" : ""
             }`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
+            {/* Top Line */}
+            <span
+              className={`absolute w-6 h-1 bg-white rounded-full transition-all duration-500 ${
+                menuOpen ? "rotate-45 translate-y-0" : "translate-y-[-6px]"
+              }`}
+            ></span>
+            {/* Middle Line */}
+            <span
+              className={`absolute w-6 h-1 bg-white rounded-full transition-all duration-500 ${
+                menuOpen ? "opacity-0" : "opacity-100"
+              }`}
+            ></span>
+            {/* Bottom Line */}
+            <span
+              className={`absolute w-6 h-1 bg-white rounded-full transition-all duration-500 ${
+                menuOpen ? "-rotate-45 translate-y-0" : "translate-y-[6px]"
+              }`}
+            ></span>
+          </div>
         </button>
 
         {/* Mobile Menu */}
         <div
           className={`${
             menuOpen
-              ? "translate-x-0 opacity-100"
-              : "translate-x-full opacity-0"
-          } md:hidden fixed top-0 right-0 w-2/4 h-full bg-gradient-to-t from-[#0077b6] via-[#74dddd] to-[#74dddd] transition-all duration-500 ease-in-out rounded-l-3xl flex flex-col items-center py-6 z-50`}
+              ? "translate-y-[80px] opacity-100"
+              : "-translate-y-full opacity-0"
+          } fixed top-0 left-0 w-full bg-gradient-to-r from-[#0077b6] via-[#74dddd] to-[#0077b6] transition-all duration-500 ease-in-out flex flex-col items-center py-6 z-50`}
         >
           {/* Menu Items */}
-          <div className="flex flex-col flex-grow items-center mt-10">
-            <Link to="/home" className="text-white py-4">
-              <FaHome className="h-8 w-8" />
+          <div className="flex flex-row space-x-24 flex-grow items-center">
+            <Link
+              to="/products"
+              onClick={() => setMenuOpen(false)}
+              className="text-white py-4 hover:scale-125"
+            >
+              <RiProductHuntFill className="h-8 w-8" />
             </Link>
-            <Link to="/stocks" className="text-white py-4">
-              <FaBoxOpen className="h-8 w-8" />
-            </Link>
-            <Link to="/stores" className="text-white py-4">
-              <FaStore className="h-8 w-8" />
-            </Link>
-            <Link to="/map" className="text-white py-4">
-              <FaMapMarkerAlt className="h-8 w-8" />
-            </Link>
-            <Link to="/aboutus" className="text-white py-4">
-              <FaInfoCircle className="h-8 w-8" />
+            <Link
+              to="/contact"
+              onClick={() => setMenuOpen(false)}
+              className="text-white py-4 hover:scale-125"
+            >
+              <IoMdMail className="h-8 w-8" />
             </Link>
           </div>
-
-          {/* Close Button */}
-          <button
-            onClick={closeMenu}
-            className="text-white mb-6 text-5xl hover:text-dark-aqua transition-all duration-300 transform hover:scale-125 absolute bottom-0 w-full"
-          >
-            &times;
-          </button>
         </div>
       </div>
     </header>

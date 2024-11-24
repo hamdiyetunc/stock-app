@@ -35,7 +35,7 @@ const Contact: React.FC = () => {
           <p>We will get back to you as soon as possible.</p>
         </div>
       ) : (
-        <div className="flex gap-8">
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Contact Form */}
           <form
             onSubmit={handleSubmit}
@@ -104,7 +104,7 @@ const Contact: React.FC = () => {
           </form>
 
           {/* Google Map */}
-          <div className="flex-1 w-full">
+          <div className="flex-1 w-full mt-8 lg:mt-0">
             <h2 className="text-xl font-bold text-[#0077b6]">Our Location</h2>
             <div className="mt-4">
               <iframe
