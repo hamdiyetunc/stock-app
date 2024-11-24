@@ -2,6 +2,16 @@
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    extend: {
+      colors: {
+        purple: "#6f42c1",
+        blue: "#007bff",
+        yellow: "#ffc107",
+        red: "#dc3545",
+        darkBackground: "#2c2e33",
+        lightBackground: "#f8f9fa",
+      },
+    },
     screens: {
       sm: "480px",
       md: "768px",
