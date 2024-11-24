@@ -14,7 +14,7 @@ import { IoMoonOutline } from "react-icons/io5";
 import { GiCircuitry } from "react-icons/gi";
 import { SlDocs } from "react-icons/sl";
 
-const Home: React.FC = () => {
+const App: React.FC = () => {
   return (
     <div className="flex min-h-screen w-full">
       {/* Sidebar */}
@@ -177,4 +177,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default App;
